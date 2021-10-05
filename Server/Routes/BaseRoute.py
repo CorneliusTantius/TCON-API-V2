@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Body
 from fastapi.param_functions import Depends
 ### AppCode Import ###
-from Server.Model.BaseModel import OkOutputModel
+from Server.Model.BaseOutputModel import *
 
 ###############################################################################
 
@@ -10,8 +10,8 @@ BaseRoute = APIRouter()
 
 ###############################################################################
 
-@BaseRoute.get('/', description="API Entry")
+@BaseRoute.get('/', description="API Entry", response_model=BaseOutputModel)
 async def Info():
-    return OkOutputModel(message='TCON API V2.0')
+    return OkOutputResult(message='TCON API V2.0')
 
 ###############################################################################

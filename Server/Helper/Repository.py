@@ -1,4 +1,5 @@
 ### Package Import ###
+from typing import List
 from bson import ObjectId
 ### AppCode Import ###
 from Server.Helper.MongoHelper import GetMongoClient
@@ -36,7 +37,7 @@ class UserRepository():
                 return False
         else:
             return False
-    async def Search(self, query=None) -> list:
+    async def Search(self, query=None) -> List[User]:
         if query:
             return self._client.find(query)
         else:

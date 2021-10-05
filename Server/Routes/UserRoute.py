@@ -4,7 +4,7 @@ from fastapi.param_functions import Depends
 from starlette.routing import request_response
 ### AppCode Import ###
 import Server.Controller.UserController as controller
-from Server.Model.BaseModel import OkOutputModel
+from Server.Model.BaseOutputModel import BaseOutputModel
 from Server.Model.ModelUser import *
 
 ###############################################################################
@@ -13,11 +13,11 @@ UserRoute = APIRouter()
 
 ###############################################################################
 
-@UserRoute.post('/user/register', description='User Registration', response_model=OkOutputModel)
+@UserRoute.post('/user/register', description='User Registration', response_model=BaseOutputModel)
 async def UserRegister(parameter: User = Body(...)):
     return await controller.UserRegister(parameter)
 
-@UserRoute.post('/user/login', description='User Login')
+@UserRoute.post('/user/login', description='User Login', response_model=BaseOutputModel)
 async def UserLogin():
     return await controller.UserLogin()
 
