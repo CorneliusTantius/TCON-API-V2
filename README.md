@@ -28,6 +28,10 @@ The development target is simply heroku server, and the Procfile is already bein
 - The base URL deployed in heroku: https://tcon-api.herokuapp.com/
 
 
+## Design Pattern
+![Design Pattern](https://github.com/CorneliusTantius/TCON-API-V2/blob/master/Templates/Code%20Flow.png?raw=true)
+
+
 Copyright (C) 2021 Cornelius Tantius
 
 All Rights Reserved
