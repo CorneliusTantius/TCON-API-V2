@@ -56,5 +56,12 @@ class UserRepository():
             if item != None:
                 item = User.parse_obj(item)
             return item
+    async def SearchOneId(self, Id:str) -> User:
+        if Id:
+            query = { "$and":[{ "_id" : ObjectId(id) }] }
+            item = self._client.find_one(query)
+            if item != None:
+                item = User.parse_obj(item)
+            return item
 
 ###############################################################################

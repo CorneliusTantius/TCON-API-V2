@@ -24,11 +24,13 @@ async def UserRegister(parameter: User):
         if (await RepUser.SearchOne(emailAndPhoneCheckQuery)):
             return ErrorOutputResult(message="This email or phone already exists")
         
-        parameter.Password = Hash.Encode(parameter.Password)
-        parameter = jsonable_encoder(parameter)
-        insertResult = await RepUser.Insert(parameter)
+        insertion = parameter
+        insertion.Password = Hash.Encode(insertion.Password)
+        insertion = jsonable_encoder(insertion)
+        insertResult = await RepUser.Insert(insertion)
         if insertResult:
-            return OkOutputResult()
+            parameter.Password = 'Encrypted Value'
+            return OkOutputResult(result=parameter)
         else:
             return ErrorOutputResult()
     except Exception as e:
@@ -52,7 +54,8 @@ async def UserLogin(parameter: UserLoginDTO):
         
         decodedPass = Hash.Decode(thisUser.Password)
         if decodedPass == parameter.Password:
-            return OkOutputResult()
+            thisUser.Password = 'Encrypted Value'
+            return OkOutputResult(result=jsonable_encoder(thisUser))
         else: 
             return ErrorOutputResult(message='Incorrect Password')
     except Exception as e:
