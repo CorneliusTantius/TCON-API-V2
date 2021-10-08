@@ -24,8 +24,8 @@ The development target is simply heroku server, and the Procfile is already bein
 - The API Documentation can be accessed from swagger(FastAPI built in feature) using ```http://localhost:5000/docs```
 - Make sure you have postman in your local machine.
 - Open postman and import a collection.
-- The collection can be obtained from [Templates] folder.
-- The base URL deployed in heroku: https://tcon-api.herokuapp.com/
+- The collection can be obtained from [Templates] folder. (To be updated)
+- The base URL deployed in heroku: https://tcon-api.herokuapp.com/ (Old TCon V1 API, To be updated)
 
 
 ## Design Pattern

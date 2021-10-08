@@ -1,6 +1,7 @@
 ### Package Import ###
 from typing import List
 from bson import ObjectId
+from pydantic import parse, parse_obj_as
 ### AppCode Import ###
 from Server.Helper.MongoHelper import GetMongoClient
 from Server.Model import *
@@ -39,13 +40,21 @@ class UserRepository():
             return False
     async def Search(self, query=None) -> List[User]:
         if query:
-            return self._client.find(query)
+            items = list(self._client.find(query))
+            return parse_obj_as(List[User], items)
         else:
-            return self._client.find()
+            items = list(self._client.find())
+            return parse_obj_as(List[User], items)
     async def SearchOne(self, query=None) -> User:
         if query:
-            return self._client.find_one(query)
+            item = self._client.find_one(query)
+            if item != None:
+                item = User.parse_obj(item)
+            return item
         else:
-            return self._client.find_one()
+            item = self._client.find_one()
+            if item != None:
+                item = User.parse_obj(item)
+            return item
 
 ###############################################################################
