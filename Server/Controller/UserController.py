@@ -18,8 +18,8 @@ async def UserRegister(parameter: User):
     try:
         # Check existing validation
         emailAndPhoneCheckQuery = { "$or": [
-            {"email":parameter.Email},
-            {"phoneNumber":parameter.PhoneNumber}
+            {"Email":parameter.Email},
+            {"PhoneNumber":parameter.PhoneNumber}
         ]}
         if (await RepUser.SearchOne(emailAndPhoneCheckQuery)):
             return ErrorOutputResult(message="This email or phone already exists")
@@ -40,9 +40,8 @@ async def UserRegister(parameter: User):
 
 async def UserLogin(parameter: UserLoginDTO):
     try:
-        print(parameter.EmailOrPhone)
-        checkEmailQuery = {"$and":[{"email": parameter.EmailOrPhone}]}
-        checkPhoneQuery = {"$and":[{"phoneNumber": parameter.EmailOrPhone}]}
+        checkEmailQuery = {"$and":[{"Email": parameter.EmailOrPhone}]}
+        checkPhoneQuery = {"$and":[{"PhoneNumber": parameter.EmailOrPhone}]}
         
         # First attempt, try to get by email
         thisUser = await RepUser.SearchOne(checkEmailQuery)
@@ -62,3 +61,15 @@ async def UserLogin(parameter: UserLoginDTO):
         return ErrorOutputResult(message=str(e))
 
 ###############################################################################
+
+async def UserUpdate(Id: str, parameter: UserUpdateModel):
+    try:
+        if parameter.Password != None:
+            parameter.Password = Hash.Encode(parameter.Password)
+        result = await RepUser.Update(Id = Id, Data = parameter)
+        if result:
+            return OkOutputResult(message='Data Updated')
+        else:
+            return ErrorOutputResult()
+    except Exception as e:
+        return ErrorOutputResult(message=str(e))

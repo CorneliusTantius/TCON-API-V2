@@ -7,16 +7,16 @@ from pydantic.fields import Field
 ###############################################################################
 
 class UserLoginDTO(BaseModel):
-    EmailOrPhone:str = Field(alias='emailOrPhone')
-    Password:str = Field(alias='password')
+    EmailOrPhone:str = Field(alias='EmailOrPhone')
+    Password:str = Field(alias='Password')
 
     class Config:
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
         schema_extra = {
             "example": {
-                "emailOrPhone":"jdoe@example.com",
-                "password":"jdoee"
+                "EmailOrPhone":"jdoe@example.com",
+                "Password":"jdoee"
             }
         }
 
