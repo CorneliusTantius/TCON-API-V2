@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 ### AppCode Import ###
 from Server.Routes import *
 from Server.Routes.BaseRoute import BaseRoute
+from Server.Routes.ConsultantRoute import ConsultantRoute
 from Server.Routes.UserRoute import UserRoute
 
 ###############################################################################
@@ -28,6 +29,7 @@ program.add_middleware(
 
 program.include_router(BaseRoute)
 program.include_router(UserRoute)
+program.include_router(ConsultantRoute)
 
 ###############################################################################
 
