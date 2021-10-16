@@ -72,3 +72,5 @@ async def UserUpdate(Id: str, parameter: UserUpdateModel):
             return ErrorOutputResult()
     except Exception as e:
         return ErrorOutputResult(message=str(e))
+
+###############################################################################

@@ -8,6 +8,7 @@ import Server.Helper.HashHelper as Hash
 from Server.Helper.Repository import *
 from Server.Model.BaseOutputModel import *
 from Server.Model.ModelConsultant import ConsultantCreateModel
+from Server.Model.DTO.UserLoginDTO import UserLoginDTO
 
 ###############################################################################
 
@@ -43,6 +44,44 @@ async def ConsultantRegister(parameter: ConsultantCreateModel):
         if insertResult:
             insertion.Password = 'Ecrypted Value'
             return OkOutputResult(result=insertion)
+        else:
+            return ErrorOutputResult()
+    except Exception as e:
+        return ErrorOutputResult(message=str(e))
+
+###############################################################################
+
+async def ConsultantLogin(parameter: UserLoginDTO):
+    try:
+        checkEmailQuery = {"$and":[{"Email": parameter.EmailOrPhone}]}
+        checkPhoneQuery = {"$and":[{"PhoneNumber": parameter.EmailOrPhone}]}
+        
+        # First attempt, try to get by email
+        thisUser = await RepConsultant.SearchOne(checkEmailQuery)
+        if thisUser == None:
+            thisUser = RepConsultant.SearchOne(checkPhoneQuery)
+        
+        if thisUser == None: 
+            return ErrorOutputResult(message='Consultant Not Found')
+        
+        decodedPass = Hash.Decode(thisUser.Password)
+        if decodedPass == parameter.Password:
+            thisUser.Password = 'Encrypted Value'
+            return OkOutputResult(result=jsonable_encoder(thisUser))
+        else: 
+            return ErrorOutputResult(message='Incorrect Password')
+    except Exception as e:
+        return ErrorOutputResult(message=str(e))
+
+###############################################################################
+
+async def ConsultantUpdateDetails(Id:str, parameter: ConsultantUpdateModel):
+    try:
+        if parameter.Password != None:
+            parameter.Password = Hash.Encode(parameter.Password)
+        result = await RepConsultant.Update(Id = Id, Data = parameter)
+        if result:
+            return OkOutputResult(message='Data Updated')
         else:
             return ErrorOutputResult()
     except Exception as e:
