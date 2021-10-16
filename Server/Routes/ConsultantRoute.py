@@ -25,4 +25,12 @@ async def UserRegister(parameter: ConsultantCreateModel = Body(...)):
 async def UserLogin(Id: str, parameter: ConsultantUpdateModel = Body(...)):
     return await controller.ConsultantUpdateDetails(Id, parameter)
 
+@ConsultantRoute.get('/consultant/get/limit/{PageSize}', description='Get Consultant with n limit', response_model=BaseOutputModel)
+async def UserLogin(PageSize:int):
+    return await controller.GetConsultantLimit(PageSize=PageSize)
+
+@ConsultantRoute.get('/consultant/get/detail/id/{Id}', description='Get Consultant Detail with Id', response_model=BaseOutputModel)
+async def UserLogin(Id:str):
+    return await controller.GetConsultantDetail(Id=Id)
+
 ###############################################################################

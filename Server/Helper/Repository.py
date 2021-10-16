@@ -30,12 +30,18 @@ class UserRepository():
                 return False
         else:
             return False
-    async def Search(self, query=None) -> List[User]:
+    async def Search(self, query=None, pageSize=None) -> List[User]:
         if query:
-            items = list(self._client.find(query))
+            if pageSize:
+                items = list(self._client.find(query).limit(pageSize))
+            else:
+                items = list(self._client.find(query))
             return parse_obj_as(List[User], items)
         else:
-            items = list(self._client.find())
+            if pageSize:
+                items = list(self._client.find().limit(pageSize))
+            else:
+                items = list(self._client.find())
             return parse_obj_as(List[User], items)
     async def SearchOne(self, query=None) -> User:
         if query:
@@ -88,12 +94,18 @@ class ConsultantRepository():
                 return False
         else:
             return False
-    async def Search(self, query=None) -> List[Consultant]:
+    async def Search(self, query=None, pageSize=None) -> List[Consultant]:
         if query:
-            items = list(self._client.find(query))
+            if pageSize:
+                items = list(self._client.find(query).limit(pageSize))
+            else:
+                items = list(self._client.find(query))
             return parse_obj_as(List[Consultant], items)
         else:
-            items = list(self._client.find())
+            if pageSize:
+                items = list(self._client.find().limit(pageSize))
+            else:
+                items = list(self._client.find())
             return parse_obj_as(List[Consultant], items)
     async def SearchOne(self, query=None) -> Consultant:
         if query:

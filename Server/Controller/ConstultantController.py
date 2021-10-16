@@ -88,3 +88,33 @@ async def ConsultantUpdateDetails(Id:str, parameter: ConsultantUpdateModel):
         return ErrorOutputResult(message=str(e))
 
 ###############################################################################
+
+async def GetConsultantLimit(PageSize:int):
+    try:
+        datas = await RepConsultant.Search(pageSize=PageSize)
+        if datas == None:
+            return OkOutputResult(result=[])
+        else:
+            ret = []
+            keys = ["_id", "FirstName", "LastName", "Category", "Rating", "RatingCount"]
+            for data in datas:
+                ret.append(dict((k, data[k]) for k in keys if k in data) )
+            return OkOutputResult(result=datas)
+    except Exception as e:
+        return ErrorOutputResult(message=str(e))
+
+###############################################################################
+
+async def GetConsultantDetail(Id:str):
+    try:
+        data = await RepConsultant.SearchOneId(Id)
+        if data == None:
+            return ErrorOutputResult(message="Consultant not found")
+        else:
+            data.Password = "Encrypted Value"
+            return OkOutputResult(result=jsonable_encoder(data))
+        return
+    except Exception as e:
+        return ErrorOutputResult(message=str(e))
+
+###############################################################################
