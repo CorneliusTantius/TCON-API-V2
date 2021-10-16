@@ -1,0 +1,5 @@
+{
+    "DatabaseUser":"DevUser",
+    "DatabasePass":"DevPass",
+    "DatabaseUrl":"mongodb+srv://DevUser:DevPass@dev.js89t.mongodb.net/development"
+}
