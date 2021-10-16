@@ -16,6 +16,8 @@ class User(BaseModel):
     Email: str = Field(alias='Email')
     PhoneNumber: str = Field(alias='PhoneNumber')
     Password: str = Field(alias='Password')
+    About: Optional[str] = Field(alias = 'About')
+    ProfileUrl: Optional[str] = Field(alias='ProfileUrl')
 
     class Config:
         allow_population_by_field_name = True
@@ -39,6 +41,8 @@ class UserUpdateModel(BaseModel):
     Email: Optional[str] = Field(alias='Email')
     PhoneNumber: Optional[str] = Field(alias='PhoneNumber')
     Password: Optional[str] = Field(alias='Password')
+    About: Optional[str] = Field(alias = 'About')
+    ProfileUrl: Optional[str] = Field(alias='ProfileUrl')
 
     class Config:
         arbitrary_types_allowed = True
@@ -49,7 +53,9 @@ class UserUpdateModel(BaseModel):
                 "LastName": "Doe",
                 "Email": "jdoe@example.com",
                 "PhoneNumber": "6285588974456",
-                "Password": "jdoee"
+                "Password": "jdoee",
+                "About": "About jane doe",
+                "ProfileUrl": "https://profileurlembed.com/file/janedoe"
             }
         }
 

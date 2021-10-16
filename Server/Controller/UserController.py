@@ -1,6 +1,5 @@
 ### Package Import ###
 from fastapi.encoders import jsonable_encoder
-from pymongo import message
 ### AppCode Import ###
 import Server.Helper.HashHelper as Hash
 from Server.Model.DTO.UserLoginDTO import UserLoginDTO
@@ -10,7 +9,7 @@ from Server.Helper.Repository import *
 
 ###############################################################################
 
-RepUser = UserRepository();
+RepUser = UserRepository()
 
 ###############################################################################
 
