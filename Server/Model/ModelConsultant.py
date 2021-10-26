@@ -68,8 +68,8 @@ class Consultant(BaseModel):
                 "Category": ["technology"],
                 "Bio": "html embed",
                 "Experience": "html embed",
-                "Awards": Award.Config.schema_extra,
-                "Educations": Education.Config.schema_extra,
+                "Awards": [Award.Config.schema_extra],
+                "Educations": [Education.Config.schema_extra],
                 "Rating": 4.5,
                 "RatingCount": 122
             }
