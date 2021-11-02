@@ -22,22 +22,23 @@ async def ConsultantRegister(parameter: ConsultantCreateModel):
             {"Email":parameter.Email},
             {"PhoneNumber":parameter.PhoneNumber}
         ]}
-        if (await RepConsultant.SearchOne(emailAndPhoneCheckQuery)):
+        if (await RepConsultant.SearchOne(emailAndPhoneCheckQuery) != None):
             return ErrorOutputResult(message="This email of phone already exists")
         
-        insertion = Consultant()
-        insertion.FirstName = parameter.FirstName
-        insertion.LastName = parameter.LastName
-        insertion.Email = parameter.Email
-        insertion.PhoneNumber = parameter.PhoneNumber
-        insertion.Password = Hash.Encode(parameter.Password)
-        insertion.Category = []
-        insertion.Bio = ""
-        insertion.Experience = ""
-        insertion.Awards = []
-        insertion.Educations = []
-        insertion.Rating = 5.0
-        insertion.RatingCount = 1
+        insertion = Consultant(
+            FirstName = parameter.FirstName,
+            LastName = parameter.LastName,
+            Email = parameter.Email,
+            PhoneNumber = parameter.PhoneNumber,
+            Password = Hash.Encode(parameter.Password),
+            Category = parameter.Category,
+            Bio = "",
+            Experience = "",
+            Awards = [],
+            Educations = [],
+            Rating = 5.0,
+            RatingCount = 1
+        )
 
         insertion_json = jsonable_encoder(insertion)
         insertResult = await RepConsultant.Insert(insertion_json)
@@ -59,7 +60,7 @@ async def ConsultantLogin(parameter: UserLoginDTO):
         # First attempt, try to get by email
         thisUser = await RepConsultant.SearchOne(checkEmailQuery)
         if thisUser == None:
-            thisUser = RepConsultant.SearchOne(checkPhoneQuery)
+            thisUser = await RepConsultant.SearchOne(checkPhoneQuery)
         
         if thisUser == None: 
             return ErrorOutputResult(message='Consultant Not Found')

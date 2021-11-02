@@ -23,7 +23,7 @@ async def UserLogin(parameter: UserLoginDTO = Body(...)):
     return await controller.UserLogin(parameter)
 
 @UserRoute.post('/user/update/{Id}', description='User Update', response_model=BaseOutputModel)
-async def UserLogin(Id: str, parameter: UserUpdateModel = Body(...)):
+async def UserUpdate(Id: str, parameter: UserUpdateModel = Body(...)):
     return await controller.UserUpdate(Id, parameter)
 
 ###############################################################################

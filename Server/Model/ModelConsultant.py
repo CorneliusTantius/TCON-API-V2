@@ -83,6 +83,7 @@ class ConsultantCreateModel(BaseModel):
     Email: str = Field(alias='Email')
     PhoneNumber: str = Field(alias='PhoneNumber')
     Password: str = Field(alias='Password')
+    Category: List[str] = Field(alias='Category')
 
     class Config:
         allow_population_by_field_name = True
@@ -95,7 +96,7 @@ class ConsultantCreateModel(BaseModel):
                 "Email": "jdoe@example.com",
                 "PhoneNumber": "6285588974456",
                 "Password": "jdoee",
-                "Category": "technology"
+                "Category": ["technology"]
             }
         }
 
